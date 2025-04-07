@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_with_places/kaha_navigation_weather/models/weather_model.dart';
@@ -7,16 +8,14 @@ import 'package:weather_with_places/kaha_navigation_weather/presentation/provide
 
 import '../../models/place_location_model.dart';
 
-const String _weatherApiKey = 'c48f704706cbbe22b4075b6b732cfee2';
-
 class NavigationWeatherManager {
   final Ref ref;
 
   NavigationWeatherManager({required this.ref});
-
+  final apiKey = dotenv.env['WEATHER_API_KEY'];
   Future<WeatherModel?> fetchWeatherInfo(PlaceLocation location) async {
     final url =
-        'https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lng}&appid=$_weatherApiKey&units=metric';
+        'https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lng}&appid=$apiKey&units=metric';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {

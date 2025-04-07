@@ -1,17 +1,17 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_with_places/kaha_navigation_weather/models/place_location_model.dart';
 
 class AutocompletePlacemarkManager {
-  final String apiKey;
   final Ref ref;
 
   AutocompletePlacemarkManager({
-    this.apiKey = 'AIzaSyDMgsnF4emRIM4eNXCuoIhRUVf7znAg1Vs',
     required this.ref,
   });
+  final apiKey = dotenv.env['GOOGLE_API_KEY'];
 
   Future<List>? fetchPlaceDetails(String name) async {
     // final point = const Point(27.7172, 85.3240);
